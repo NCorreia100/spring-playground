@@ -61,4 +61,22 @@ public class DemoApplicationTests {
 				.andExpect(status().isOk())
 				.andExpect(content().json("{vehicles:{year:1987,doors:2}}"));
 	}
+	@Test
+	public void testMathEndpoint() throws Exception {
+
+		RequestBuilder request = MockMvcRequestBuilders.get("/app/math/calculate?x=5&y=2");
+		RequestBuilder addRequest = MockMvcRequestBuilders.get("/app/math/calculate?operation=add&x=5&y=2");
+		RequestBuilder subtractRequest = MockMvcRequestBuilders.get("/app/math/calculate?operation=subtract&x=5&y=2");
+		RequestBuilder multiplyRequest = MockMvcRequestBuilders.get("/app/math/calculate?operation=multiply&x=5&y=2");
+		RequestBuilder divideRequest = MockMvcRequestBuilders.get("/app/math/calculate?operation=divide&x=5&y=2");
+		//exercise
+		this.mvc.perform(request)
+				//assert
+				.andExpect(status().isOk())
+				.andExpect(content().string("5 + 2 = 7"));
+		this.mvc.perform(addRequest).andExpect(content().string("5 + 2 = 7"));
+		this.mvc.perform(subtractRequest).andExpect(content().string("5 - 2 = 3"));
+		this.mvc.perform(multiplyRequest).andExpect(content().string("5 * 2 = 10"));
+		this.mvc.perform(divideRequest).andExpect(content().string("5 / 2 = 2.5"));
+	}
 }
