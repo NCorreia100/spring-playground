@@ -51,4 +51,14 @@ public class DemoApplicationTests {
 				.andExpect(status().isOk())
 				.andExpect(content().string("3.141592653589793"));
 	}
+	@Test
+	public void testVehiclesEndpoint() throws Exception {
+		//set up
+		RequestBuilder request = MockMvcRequestBuilders.get("/app/vehicles?year=1987&doors=2");
+		//exercise
+		this.mvc.perform(request)
+				//assert
+				.andExpect(status().isOk())
+				.andExpect(content().json("{vehicles:{year:1987,doors:2}}"));
+	}
 }

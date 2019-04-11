@@ -2,6 +2,8 @@ package com.example.demo;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 public class WebController {
 
@@ -18,5 +20,11 @@ public class WebController {
     @GetMapping("/math/pi")
     public String getPi(){
         return String.valueOf(Math.PI);
+    }
+
+    @GetMapping("/app/vehicles")
+    public String getVehicles(@RequestParam Map<String, String> query){
+
+        return "{vehicles:{year:"+query.get("year")+",doors:"+query.get("doors")+"}}";
     }
 }
