@@ -29,19 +29,17 @@ public class WebController {
 
         return "{vehicles:{year:"+query.get("year")+",doors:"+query.get("doors")+"}}";
     }
-    @GetMapping("/app/math/calculate")
+    @PostMapping("/app/math/calculate")
     public Object doMath(@RequestParam Map<String, String> query){
-        float x = Float.valueOf(query.get("x"));
-        float y = Float.valueOf(query.get("y"));
+        int x = Integer.parseInt(query.get("x"));
+        int y = Integer.parseInt(query.get("y"));
         String operation = query.get("operation");
-
-        System.out.println("operation: "+operation);
 
         if(operation==null)  return Math.round(x)+" + "+Math.round(y)+" = "+Math.round(x+y);
         if(operation.equals("add")) return Math.round(x)+" + "+Math.round(y)+" = "+Math.round(x+y);
         if(operation.equals("subtract")) return Math.round(x)+" - "+Math.round(y)+" = "+Math.round(x-y);
         if(operation.equals("multiply")) return Math.round(x)+" * "+Math.round(y)+" = "+Math.round(x*y);
-        if(operation.equals("divide")) return Math.round(x)+" / "+Math.round(y)+" = "+(x/y);
+        if(operation.equals("divide")) return Math.round(x)+" / "+Math.round(y)+" = "+(double)x/ (double)(y);
         System.out.println("no operation set");
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Parameters cannot be accepted");

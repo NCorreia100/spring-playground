@@ -64,11 +64,11 @@ public class DemoApplicationTests {
 	@Test
 	public void testMathEndpoint() throws Exception {
 
-		RequestBuilder request = MockMvcRequestBuilders.get("/app/math/calculate?x=5&y=2");
-		RequestBuilder addRequest = MockMvcRequestBuilders.get("/app/math/calculate?operation=add&x=5&y=2");
-		RequestBuilder subtractRequest = MockMvcRequestBuilders.get("/app/math/calculate?operation=subtract&x=5&y=2");
-		RequestBuilder multiplyRequest = MockMvcRequestBuilders.get("/app/math/calculate?operation=multiply&x=5&y=2");
-		RequestBuilder divideRequest = MockMvcRequestBuilders.get("/app/math/calculate?operation=divide&x=5&y=2");
+		RequestBuilder request = MockMvcRequestBuilders.post("/app/math/calculate?x=5&y=2");
+		RequestBuilder addRequest = MockMvcRequestBuilders.post("/app/math/calculate?operation=add&x=5&y=2");
+		RequestBuilder subtractRequest = MockMvcRequestBuilders.post("/app/math/calculate?operation=subtract&x=5&y=2");
+		RequestBuilder multiplyRequest = MockMvcRequestBuilders.post("/app/math/calculate?operation=multiply&x=5&y=2");
+		RequestBuilder divideRequest = MockMvcRequestBuilders.post("/app/math/calculate?operation=divide&x=5&y=2");
 		//exercise
 		this.mvc.perform(request)
 				//assert
