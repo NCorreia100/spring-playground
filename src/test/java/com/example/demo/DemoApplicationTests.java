@@ -23,7 +23,6 @@ public class DemoApplicationTests {
 	@Test
 	public void testHomePage() throws Exception {
 		//set up
-
 		RequestBuilder request = MockMvcRequestBuilders.get("/").param("q","test");
 		//exercise
 		this.mvc.perform(request)
@@ -31,5 +30,25 @@ public class DemoApplicationTests {
 				.andExpect(status().isOk())
 				.andExpect(content().string("The parameter passed in was test"));
 	}
+	@Test
+	public void testEndpoints() throws Exception {
+		//set up
+		RequestBuilder request = MockMvcRequestBuilders.get("/app/json").param("q","test");
+		//exercise
+		this.mvc.perform(request)
+				//assert
+				.andExpect(status().isOk())
+				.andExpect(content().json("{q:test}"));
+	}
 
+	@Test
+	public void getPi() throws Exception {
+		//set up
+		RequestBuilder request = MockMvcRequestBuilders.get("/math/pi");
+		//exercise
+		this.mvc.perform(request)
+				//assert
+				.andExpect(status().isOk())
+				.andExpect(content().string("3.141592653589793"));
+	}
 }
