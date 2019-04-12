@@ -1,7 +1,10 @@
 package com.example.demo;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.apache.coyote.Response;
+
+import org.omg.CORBA.portable.ResponseHandler;
+import org.springframework.http.*;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -25,7 +28,7 @@ public class WebController {
     }
 
     @GetMapping("/app/vehicles")
-    public String getVehicles(@RequestParam Map<String, String> query){
+    public String getVehicles(@RequestParam Map<String, String> query, @CookieValue(name="math") String cookie){
 
         return "{vehicles:{year:"+query.get("year")+",doors:"+query.get("doors")+"}}";
     }
@@ -35,12 +38,17 @@ public class WebController {
         int y = Integer.parseInt(query.get("y"));
         String operation = query.get("operation");
 
-        if(operation==null)  return Math.round(x)+" + "+Math.round(y)+" = "+Math.round(x+y);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Set-Cookie","math="+operation);
+
+        if(operation==null)  return ResponseEntity.status(HttpStatus.OK).headers(headers).body(Math.round(x)+" + "+Math.round(y)+" = "+Math.round(x+y));
         if(operation.equals("add")) return Math.round(x)+" + "+Math.round(y)+" = "+Math.round(x+y);
         if(operation.equals("subtract")) return Math.round(x)+" - "+Math.round(y)+" = "+Math.round(x-y);
         if(operation.equals("multiply")) return Math.round(x)+" * "+Math.round(y)+" = "+Math.round(x*y);
         if(operation.equals("divide")) return Math.round(x)+" / "+Math.round(y)+" = "+(double)x/ (double)(y);
-        System.out.println("no operation set");
+
+
+
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Parameters cannot be accepted");
     }

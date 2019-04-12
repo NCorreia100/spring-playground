@@ -5,13 +5,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(WebController.class)
@@ -73,6 +73,7 @@ public class DemoApplicationTests {
 		this.mvc.perform(request)
 				//assert
 				.andExpect(status().isOk())
+				.andExpect(cookie().exists("math"))
 				.andExpect(content().string("5 + 2 = 7"));
 		this.mvc.perform(addRequest).andExpect(content().string("5 + 2 = 7"));
 		this.mvc.perform(subtractRequest).andExpect(content().string("5 - 2 = 3"));
